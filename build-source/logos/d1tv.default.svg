@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="132" height="99" version="1.1" viewBox="0 0 132 99.000001" xml:space="preserve"
+    xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    style="transform: scaleX(1.34757) scaleY(1.34757) !important; transform-origin: 0px 0px 0px !important; position: relative; height: 100%; transition-property: transform, left, top; transition-duration: 0s; overflow: auto;">
+    <defs>
+        <clipPath id="a">
+            <path d="M 0,595.28 H 841.89 V 0 H 0 Z" />
+        </clipPath>
+    </defs>
+    <g transform="matrix(1.3333 0 0 -1.3333 0 99)">
+        <g transform="matrix(.16737 0 0 .16737 -21.783 -18.316)">
+            <g clip-path="url(#a)">
+                <g transform="translate(404.24 444.16)">
+                    <path
+                        d="m0 0v-149.67c-0.941-21.848-13.415-54.074-62.79-54.395h-135.15c-36.145-0.064-71.567 27.183-69.397 80.297 1.782 53.95 43.16 72.535 75.31 73.054h95.549c30.368-0.03 33.058-41.19 0-40.452h-95.938c-20.203-2.537-33.743-14.813-34.47-36.828 1.513-22.014 13.789-34.29 36.828-36.828h121.23c24.798 0.984 26.148 16.959 25.961 27.169v137.65z"
+                        fill="#231f20" fill-rule="evenodd" />
+                </g>
+                <g transform="translate(599.19 446.09)">
+                    <path
+                        d="m0 0h-148.92c-31.868 0.185-32.794-41.317 0-41.131h104.01v-122.92h-106.85c-29.78 0.162-33.111-39.645 0-40.658h238.75c37.876-1.19 37.423 41.168 0 40.658h-86.99z"
+                        fill="#f5821f" fill-rule="evenodd" />
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
