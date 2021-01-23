@@ -20,7 +20,7 @@ fi
 ########################################################
 ## Search for required commands and exit if not found ##
 ########################################################
-commands=( tar sed grep tr cat sort find mkdir rm cp mv ln readlink )
+commands=( sed grep tr cat sort find mkdir rm cp mv ln readlink )
 for i in ${commands[@]}; do
     if ! which $i &> /dev/null; then
         missingcommands="$i $missingcommands"
@@ -30,25 +30,6 @@ if [[ -z $missingcommands ]]; then
     echo "$(date +'%H:%M:%S') - INFO: All required commands are found!"
 else
     echo "$(date +'%H:%M:%S') - ERROR: The following commands are not found: $missingcommands"
-    exit 1
-fi
-
-if which ar &> /dev/null; then
-    skipipk="false"
-    echo "$(date +'%H:%M:%S') - INFO: Creation of ipk files enabled!"
-else
-    skipipk="true"
-    echo "$(date +'%H:%M:%S') - WARNING: Creation of ipk files disabled! Try installing: ar (found in package: binutils)"
-fi
-
-if which xz &> /dev/null; then
-    compressor="xz -9 --extreme --memlimit=40%" ; ext="xz"
-    echo "$(date +'%H:%M:%S') - INFO: Using xz as compression!"
-elif which bzip2 &> /dev/null; then
-    compressor="bzip2 -9" ; ext="bz2"
-    echo "$(date +'%H:%M:%S') - INFO: Using bzip2 as compression!"
-else
-    echo "$(date +'%H:%M:%S') - ERROR: No archiver has been found! Try installing: xz (or: bzip2)"
     exit 1
 fi
 
@@ -236,34 +217,9 @@ grep -v -e '^#' -e '^$' $backgroundsconf | while read lines ; do
         convert $location/build-source/backgrounds/$resolution/$background.png \( $logo -background none -bordercolor none -border 100 -trim -border 1% -resize $resize -gravity center -extent $resolution +repage \) -layers merge - 2>> $logfile | $pngquant - 2>> $logfile > $temp/package/picon/logos/$logoname.png
     done
 
-    echo "$(date +'%H:%M:%S') - EXECUTING: Creating binary packages: $packagenamenoversion"
     $temp/create-symlinks.sh
-    find $temp/package -exec touch --no-dereference -t $timestamp {} \;
-
-    if [[ $skipipk = "false" ]]; then
-        mkdir $temp/package/CONTROL ; cat > $temp/package/CONTROL/control <<-EOF
-			Package: enigma2-plugin-picons-$packagenamenoversion
-			Version: $version
-			Section: base
-			Architecture: all
-			Maintainer: https://github.com/picons
-			Source: https://github.com/picons
-			Description: $packagenamenoversion
-			OE: enigma2-plugin-picons-$packagenamenoversion
-			HomePage: https://github.com/picons
-			License: unknown
-			Priority: optional
-		EOF
-        touch --no-dereference -t $timestamp $temp/package/CONTROL/control
-        $location/resources/tools/ipkg-build.sh -o root -g root $temp/package $binaries >> $logfile
-    fi
-
-    mv $temp/package/picon $temp/package/$packagename
-
-    tar --dereference --owner=root --group=root -cf - --exclude=logos --directory=$temp/package $packagename | $compressor 2>> $logfile > $binaries/$packagename.hardlink.tar.$ext
-    tar --owner=root --group=root -cf - --directory=$temp/package $packagename | $compressor 2>> $logfile > $binaries/$packagename.symlink.tar.$ext
-
-    find $binaries -exec touch -t $timestamp {} \;
+    mkdir -p $binaries/$packagename
+    find $temp/package/picon -maxdepth 1 -type l -name "*.png" -exec cp --dereference {} $binaries/$packagename/ \;
     rm -rf $temp/package
 done
 
