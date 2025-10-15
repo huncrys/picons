@@ -150,7 +150,9 @@ if [[ -f $location/build-input/tvheadend.serverconf ]]; then
             serviceref=$(echo $rx_buf |  jq -r '.entries[].icon'  | grep -o '1_0_.*_.*_.*_.*_.*_0_0_0')
 
             if [[ ! -n $serviceref ]]; then
-                continue
+                # TODO: Fetch muxes and create serviceref from onid, tsid, sid and dvb_servicetype
+                serviceref="1_0_1_0_0_0_FFFF0000_0_0_0"
+                #logo_snp=$(echo $rx_buf | jq -r '.entries[].icon' | sed -n -e 's/.*\/\([^/]*\)\.png/\1/p' | sed -e 's/\(.*\)/\L\1/g')
             fi
 
             serviceref_id=$(sed -e 's/^[^_]*_0_[^_]*_//g' -e 's/_0_0_0$//g' <<< "$serviceref")
