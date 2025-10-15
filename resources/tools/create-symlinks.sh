@@ -11,7 +11,7 @@ chmod 755 $temp/create-symlinks.sh
 ## Create symlinks for UTF8SNP, SNP & SRP using servicelist ##
 ##############################################################
 if [[ $style = "snp" ]] || [[ $style = "srp" ]] || [[ $style = "utf8snp" ]]; then
-    cat $location/build-output/servicelist-*-$style.txt | tr -d [:blank:] | tr -d [=*=] | while read line ; do
+    cat $location/build-output/servicelist-*-$style.txt | tr -d [:blank:] | tr -d '[=\*=]' | while read line ; do
         IFS="|"
         line_data=($line)
         serviceref=${line_data[0]}
